@@ -33,22 +33,22 @@ namespace Properties
         {
         }
 
-        // TODO improve
-        public string GetSeed()
+        /// <summary>
+        /// Fields properties, in this case there are just getters.
+        /// </summary>
+        public string Seed
         {
-            return this.seed;
+            get { return seed; }
         }
 
-        // TODO improve
-        public string GetName()
+        public string Name
         {
-            return this.name;
+            get { return name; }
         }
 
-        // TODO improve
-        public int GetOrdinal()
+        public int Ordinal
         {
-            return this.ordinal;
+            get { return ordinal; }
         }
 
         /// <inheritdoc cref="object.ToString"/>
@@ -58,8 +58,25 @@ namespace Properties
             return $"{this.GetType().Name}(Name={this.GetName()}, Seed={this.GetSeed()}, Ordinal={this.GetOrdinal()})";
         }
 
-        // TODO generate Equals(object obj)
+        /// <inheritdoc cref="object.Equals"/>
+        protected bool Equals(Card other)
+        {
+            return seed == other.seed && name == other.name && ordinal == other.ordinal;
+        }
 
-        // TODO generate GetHashCode()
+        /// <inheritdoc cref="object.Equals"/>
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((Card) obj);
+        }
+
+        /// <inheritdoc cref="object.GetHashCode"/>
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(seed, name, ordinal);
+        }
     }
 }
